@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Farmer's Digital Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Add some simple styling for the choice cards */
+        .container { text-align: center; padding-top: 50px; }
+        .card-container { display: flex; justify-content: center; gap: 40px; margin-top: 40px; }
+        .card { border: 1px solid #ddd; padding: 40px; border-radius: 10px; width: 300px; text-decoration: none; color: black; }
+        .card:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .card h2 { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Farmer's Digital Assistant 🌱</h1>
+        <p>Your one-stop solution for crop management.</p>
+        <div class="card-container">
+            <a href="{{ url_for('yield_prediction') }}" class="card">
+                <h2>Predict Crop Yield</h2>
+                <p>Get an estimate of your crop yield based on field and weather data.</p>
+            </a>
+            <a href="{{ url_for('disease_detection') }}" class="card">
+                <h2>Detect Crop Disease</h2>
+                <p>Upload an image of a crop leaf to identify diseases instantly.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Yield Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #2c5282;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1.2rem;
+            border-radius: 6px;
+            border: 1px solid #cbd5e0;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+        input[type="submit"] {
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(90deg, #38a169, #2f855a);
+        }
+        .home-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #4299e1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Predict Crop Yield</h1>
+        <form action="{{ url_for('yield_prediction') }}" method="POST">
+            <label for="Region">Region:</label>
+            <select name="Region" id="Region" required>
+                <option>North</option> <option>South</option> <option>East</option> <option>West</option>
+            </select>
+
+            <label for="Soil_Type">Soil Type:</label>
+            <select name="Soil_Type" id="Soil_Type" required>
+                <option>Sandy</option> <option>Clay</option> <option>Loam</option> <option>Silt</option> <option>Peaty</option> <option>Chalky</option>
+            </select>
+
+            <label for="Crop">Crop:</label>
+            <select name="Crop" id="Crop" required>
+                <option>Cotton</option> <option>Rice</option> <option>Barley</option> <option>Soybean</option> <option>Wheat</option> <option>Maize</option>
+            </select>
+
+            <label for="Rainfall_mm">Rainfall (mm):</label>
+            <input type="number" name="Rainfall_mm" id="Rainfall_mm" step="any" min="0" required>
+
+            <label for="Temperature_Celsius">Temperature (°C):</label>
+            <input type="number" name="Temperature_Celsius" id="Temperature_Celsius" step="any" required>
+
+            <label for="Fertilizer_Used">Fertilizer Used:</label>
+            <select name="Fertilizer_Used" id="Fertilizer_Used" required>
+                <option>Yes</option> <option>No</option>
+            </select>
+
+            <label for="Irrigation_Used">Irrigation Used:</label>
+            <select name="Irrigation_Used" id="Irrigation_Used" required>
+                <option>Yes</option> <option>No</option>
+            </select>
+
+            <label for="Weather_Condition">Weather Condition:</label>
+            <select name="Weather_Condition" id="Weather_Condition" required>
+                <option>Sunny</option> <option>Rainy</option> <option>Cloudy</option>
+            </select>
+
+            <input type="submit" value="Predict">
+        </form>
+        <a href="{{ url_for('home') }}" class="home-link">Back to Home</a>
+    </div>
+</body>
+</html>

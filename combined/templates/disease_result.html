@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --light-green: #e8f5e9;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+        }
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+        .image-container {
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .result-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        .prediction-label {
+            font-weight: bold;
+            color: var(--text-dark);
+            font-size: 1.8rem;
+        }
+        .confidence-badge {
+            background-color: var(--dark-green);
+            color: white;
+            font-weight: 600;
+        }
+        .solutions-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .solution-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .solution-icon {
+            color: var(--primary-green);
+            margin-right: 1rem;
+            margin-top: 0.3rem;
+        }
+        @media (max-width: 992px) {
+            .main-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="card">
+            <h2 class="mb-3">Classification Result</h2>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename=image_path.split('static/')[-1]) }}" alt="Uploaded Image" class="result-image">
+            </div>
+            
+            <div class="mb-4">
+                <h4>Top Prediction</h4>
+                <h3 class="prediction-label">{{ results[0]['label'] }}</h3>
+                <span class="badge rounded-pill fs-6 confidence-badge">
+                    Confidence: {{ (results[0]['score'] * 100)|round(2) }}%
+                </span>
+            </div>
+
+            {% if results[1:] %}
+            <div>
+                <h4>Other Possibilities</h4>
+                <ul class="list-group">
+                    {% for result in results[1:] %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ result['label'] }}
+                        <span class="badge bg-secondary rounded-pill">{{ (result['score'] * 100)|round(2) }}%</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <a href="{{ url_for('disease_detection') }}" class="btn btn-outline-success w-100 mt-4">Analyze Another</a>
+        </div>
+
+        <div class="card">
+            <h2 class="mb-3">Diagnosis & Solutions</h2>
+            <div id="diseaseSolutions">
+                <!-- JS will populate this -->
+            </div>
+             <a href="{{ url_for('home') }}" class="btn btn-secondary w-100 mt-4">Back to Home</a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/disease_solutions.js') }}"></script>
+</body>
+</html>
